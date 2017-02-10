@@ -59,12 +59,13 @@ class Screen(object):
         False
     """
 
-    def __init__(self, name, initialize=False):
+    def __init__(self, name, initialize=False, params=None):
         self.name = name
         self._id = None
         self._status = None
         self.logs = None
         self._logfilename = None
+        self.params= params
         if initialize:
             self.initialize()
 
@@ -112,7 +113,10 @@ class Screen(object):
             Thread(target=self._delayed_detach).start()
             # support Unicode (-U),
             # attach to a new/existing named screen (-R).
-            system('screen -UR ' + self.name)
+            if self.params is not None:
+                system('screen -UR ' + self.name + ' ' + self.params)
+            else:
+                system('screen -UR ' + self.name)
 
     def interrupt(self):
         """Insert CTRL+C in the screen session"""
