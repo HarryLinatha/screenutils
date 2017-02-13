@@ -94,7 +94,7 @@ class Screen(object):
     def enable_logs(self, filename=None):
         if filename is None:
             filename = self.name
-        self._screen_commands("logfile " + filename, "log on")
+        self._screen_commands("logfile " + filename, "logfile flush 0", "log on")
         self._logfilename = filename
         open(filename, 'w+')
         self.logs = tailf(filename)
